@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.softdy.bestqr",
+      "sha256_cert_fingerprints":
+        ["F8:E1:EA:1D:BA:DC:0D:E7:D8:69:76:5C:0A:D2:E0:DB:DE:E7:CA:B8:2F:29:B0:B2:FC:AF:6B:28:75:B2:18:84"]
+    }
+  }
+]

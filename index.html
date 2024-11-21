@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoQrcode - Ứng dụng Tạo mã QR Ngân hàng có sẵn số tiền</title>
+    <meta
+      name="description"
+      content="GoQrcode giúp bạn tạo mã QR ngân hàng có sẵn số tiền và nội dung chuyển khoản, mang lại sự tiện lợi và nhanh chóng cho mọi giao dịch."
+    />
+    <meta
+      name="keywords"
+      content="GoQrcode, mã QR, chuyển tiền, ứng dụng ngân hàng, tạo mã QR kèm số tiền, lưu trữ mã QR, không cần internet"
+    />
+    <meta name="author" content="Softdy" />
+    <meta name="theme-color" content="#317EFB" />
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>GoQrcode</title>
+    <script type="module" crossorigin src="/assets/index.84605750.js"></script>
+    <link rel="modulepreload" href="/assets/react-venders.8c4110e0.js">
+    <link rel="stylesheet" href="/assets/index-deab1a3a.css">
+  </head>
+  <body style="margin: 0">
+    <div id="root"></div>
+    
+    
+    <script>
+      window.appVersion = '1.0.2';
+      window.buildVersion = '1';
+    </script>
+    <!-- start init sw -->
+    <script>
+      window.addEventListener('load', () => {
+        function initWorker() {
+          navigator.serviceWorker
+            .register('/service-worker.js')
+            .then((registration) => {
+              console.log(
+                'Service Worker registered with scope:',
+                registration.scope,
+              )
+              registration.onupdatefound = () => {
+                const newWorker = registration.installing
+                newWorker.onstatechange = () => {
+                  if (
+                    newWorker.state === 'installed' &&
+                    navigator.serviceWorker.controller
+                  ) {
+                    newWorker.postMessage({
+                      action: 'removeOldCache',
+                      host: window.location.href, // Truyền URL của trang hiện tại
+                    })
+                    newWorker.postMessage({ action: 'updateCache' })
+                    if (!window.isUpdating) {
+                      isUpdating = true // Đánh dấu đang cập nhật
+                      // Nếu có bản cập nhật, yêu cầu cập nhật cache
+
+                      newWorker.postMessage('skipWaiting') // Bỏ qua và sử dụng worker mới
+                      setTimeout(() => {
+                        location.reload() // Tải lại sau một thời gian
+                      }, 5000) // Thay đổi khoảng thời gian nếu cần
+                    }
+                  }
+                }
+              }
+
+              document.addEventListener('visibilitychange', () => {
+                if (document.visibilityState === 'visible') {
+                  // Khi trang quay lại foreground, kiểm tra và cập nhật Service Worker
+                  console.log('Page is visible, checking for updates...')
+                  registration.update() // Yêu cầu kiểm tra bản cập nhật của Service Worker
+                }
+              })
+            })
+            .catch((error) => {
+              window.logError ? window.logError(e.message, e.stack) : ''
+              if (window.isDebug) {
+                alert(error.message)
+              }
+              console.error('Service Worker registration failed:', error)
+            })
+        }
+        initWorker()
+      })
+    </script>
+    <!-- end init sw -->
+  </body>
+</html>
